@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Espace Administrateur — ENT</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="app-shell">
+  <div class="topbar">
+    <div class="brand">ENT<span>·</span>Réunion</div>
+    <div class="who">
+      <span id="who-name"></span>
+      <span class="role-tag">Administrateur</span>
+      <button class="btn ghost" onclick="logout()">Se déconnecter</button>
+    </div>
+  </div>
+
+  <nav class="portal-tabs">
+    <button class="tab-btn active" data-tab="accueil">
+      <svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7"/><path d="M5 10v9h14v-9"/></svg>
+      Accueil
+    </button>
+    <button class="tab-btn" data-tab="comptes">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c1-3.5 4-5.5 7-5.5s6 2 7 5.5"/></svg>
+      Comptes
+    </button>
+    <button class="tab-btn" data-tab="etablissement">
+      <svg viewBox="0 0 24 24"><path d="M4 21V8l8-5 8 5v13"/><path d="M9 21v-6h6v6"/></svg>
+      Établissement
+    </button>
+  </nav>
+
+  <main class="content">
+
+    <section class="tab-panel active" id="tab-accueil">
+      <div class="page-head">
+        <h1>Bonjour, <span id="greeting-name"></span></h1>
+        <p>Vue d'ensemble de l'espace numérique de travail.</p>
+      </div>
+      <div class="grid-2" style="margin-bottom:2rem;">
+        <div class="portal-card">
+          <h3>Comptes créés</h3>
+          <p style="font-size:2rem; font-family:'Fraunces',serif; margin:0;" id="count-users">0</p>
+          <p class="small-note">Professeurs et élèves confondus.</p>
+        </div>
+        <div class="portal-card">
+          <h3>Dernière activité</h3>
+          <p class="small-note">Site déployé et opérationnel. Rendez-vous dans l'onglet « Comptes » pour créer ou gérer des accès.</p>
+        </div>
+      </div>
+      <h3 style="margin-bottom:1rem;">Mes applications</h3>
+      <div class="app-tiles">
+        <button class="app-tile" data-goto="comptes">
+          <span class="tile-icon c1"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c1-3.5 4-5.5 7-5.5s6 2 7 5.5"/></svg></span>
+          <span class="tile-name">Comptes</span>
+          <span class="tile-desc">Créer et gérer les accès</span>
+        </button>
+        <button class="app-tile" data-goto="etablissement">
+          <span class="tile-icon c4"><svg viewBox="0 0 24 24"><path d="M4 21V8l8-5 8 5v13"/><path d="M9 21v-6h6v6"/></svg></span>
+          <span class="tile-name">Établissement</span>
+          <span class="tile-desc">Informations générales</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="tab-comptes">
+      <div class="page-head">
+        <h1>Gestion des comptes</h1>
+        <p>Créez les comptes des professeurs et des élèves, et gérez les accès existants.</p>
+      </div>
+
+      <div class="grid-2">
+        <div class="panel">
+          <h3>Créer un compte</h3>
+          <div class="notice" id="notice"></div>
+          <form id="create-form">
+            <label for="name">Nom complet</label>
+            <input type="text" id="name" required />
+
+            <div class="form-row">
+              <div>
+                <label for="new-id">Identifiant</label>
+                <input type="text" id="new-id" required />
+              </div>
+              <div>
+                <label for="new-password">Mot de passe</label>
+                <input type="text" id="new-password" required />
+              </div>
+            </div>
+
+            <label for="role">Espace</label>
+            <select id="role">
+              <option value="professeur">Professeur</option>
+              <option value="eleve">Élève</option>
+            </select>
+
+            <button type="submit" class="btn accent full">Créer le compte</button>
+          </form>
+        </div>
+
+        <div class="panel">
+          <h3>Comptes existants</h3>
+          <table>
+            <thead>
+              <tr><th>Nom</th><th>Identifiant</th><th>Espace</th><th></th></tr>
+            </thead>
+            <tbody id="user-rows"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="tab-etablissement">
+      <div class="page-head">
+        <h1>Établissement</h1>
+        <p>Informations générales.</p>
+      </div>
+      <div class="portal-card">
+        <h3>NEO Réunion</h3>
+        <p class="small-note">Espace numérique de travail de démonstration. Les informations de cet onglet sont à personnaliser selon ton établissement.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="foot">Démonstration locale — les comptes sont stockés dans ce navigateur uniquement.</footer>
+</div>
+
+<script src="app.js"></script>
+<script>
+  const session = requireRole("admin");
+  if (session) {
+    document.getElementById("who-name").textContent = session.name;
+    document.getElementById("greeting-name").textContent = session.name;
+  }
+
+  function openTab(tabName) {
+    document.querySelectorAll(".tab-btn").forEach((b) => b.classList.remove("active"));
+    document.querySelectorAll(".tab-panel").forEach((p) => p.classList.remove("active"));
+    document.querySelector(`.tab-btn[data-tab="${tabName}"]`).classList.add("active");
+    document.getElementById("tab-" + tabName).classList.add("active");
+  }
+
+  document.querySelectorAll(".tab-btn").forEach((btn) => {
+    btn.addEventListener("click", () => openTab(btn.dataset.tab));
+  });
+
+  document.querySelectorAll(".app-tile").forEach((tile) => {
+    tile.addEventListener("click", () => openTab(tile.dataset.goto));
+  });
+
+  const form = document.getElementById("create-form");
+  const notice = document.getElementById("notice");
+
+  function showNotice(text, ok) {
+    notice.textContent = text;
+    notice.className = "notice show " + (ok ? "ok" : "bad");
+  }
+
+  function renderUsers() {
+    const rows = document.getElementById("user-rows");
+    const users = getUsers().filter((u) => u.role !== "admin");
+    document.getElementById("count-users").textContent = users.length;
+    if (users.length === 0) {
+      rows.innerHTML = '<tr class="empty-row"><td colspan="4">Aucun compte professeur ou élève pour le moment.</td></tr>';
+      return;
+    }
+    rows.innerHTML = users
+      .map(
+        (u) => `
+      <tr>
+        <td>${u.name}</td>
+        <td>${u.id}</td>
+        <td><span class="pill ${u.role === "professeur" ? "prof" : "eleve"}">${roleLabel(u.role)}</span></td>
+        <td class="action-row"><button class="btn ghost" data-id="${u.id}">Supprimer</button></td>
+      </tr>`
+      )
+      .join("");
+
+    rows.querySelectorAll("button[data-id]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        deleteUser(btn.getAttribute("data-id"));
+        renderUsers();
+      });
+    });
+  }
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const name = document.getElementById("name").value.trim();
+    const id = document.getElementById("new-id").value.trim();
+    const password = document.getElementById("new-password").value;
+    const role = document.getElementById("role").value;
+
+    const result = createUser({ id, password, role, name });
+    if (!result.ok) {
+      showNotice(result.error, false);
+      return;
+    }
+    showNotice(`Compte ${roleLabel(role).toLowerCase()} créé pour ${name}.`, true);
+    form.reset();
+    renderUsers();
+  });
+
+  renderUsers();
+</script>
+</body>
+</html>

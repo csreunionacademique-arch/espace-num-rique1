@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Connexion — Espace Numérique de Travail</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="login-shell">
+  <div class="login-hero">
+    <div class="brand">ENT<span>·</span>Réunion</div>
+    <div>
+      <h1>Un seul espace pour toute la classe.</h1>
+      <p>Administration, professeurs et élèves retrouvent leurs outils au même endroit, chacun dans son propre espace.</p>
+      <div class="spaces">
+        <div>Espace<br>Administrateur</div>
+        <div>Espace<br>Professeur</div>
+        <div>Espace<br>Élève</div>
+      </div>
+    </div>
+    <div style="font-size:0.8rem; color:#9aa5bb;">Démonstration locale — aucune donnée n'est envoyée à un serveur.</div>
+  </div>
+
+  <div class="login-panel">
+    <div class="login-card">
+      <h2>Connexion</h2>
+      <p class="sub">Entrez votre identifiant et votre mot de passe.</p>
+
+      <form id="login-form">
+        <label for="id">Identifiant</label>
+        <input type="text" id="id" autocomplete="username" required />
+
+        <label for="password">Mot de passe</label>
+        <input type="password" id="password" autocomplete="current-password" required />
+
+        <button type="submit" class="btn full">Se connecter</button>
+        <div class="error-msg" id="error-msg">Identifiant ou mot de passe incorrect.</div>
+      </form>
+
+      <div class="hint">
+        Accès administrateur par défaut : <strong>root</strong> / <strong>Administrateur@123</strong><br>
+        Une fois connecté en administrateur, vous pourrez créer les comptes professeurs et élèves.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+<script>
+  const form = document.getElementById("login-form");
+  const errorMsg = document.getElementById("error-msg");
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const id = document.getElementById("id").value.trim();
+    const password = document.getElementById("password").value;
+    const user = login(id, password);
+    if (!user) {
+      errorMsg.classList.add("show");
+      return;
+    }
+    window.location.href = dashboardForRole(user.role);
+  });
+</script>
+</body>
+</html>

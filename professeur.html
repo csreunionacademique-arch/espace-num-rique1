@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Espace Professeur — ENT</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="app-shell">
+  <div class="topbar">
+    <div class="brand">ENT<span>·</span>Réunion</div>
+    <div class="who">
+      <span id="who-name"></span>
+      <span class="role-tag">Professeur</span>
+      <button class="btn ghost" onclick="logout()">Se déconnecter</button>
+    </div>
+  </div>
+
+  <nav class="portal-tabs">
+    <button class="tab-btn active" data-tab="accueil">
+      <svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7"/><path d="M5 10v9h14v-9"/></svg>
+      Accueil
+    </button>
+    <button class="tab-btn" data-tab="classes">
+      <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="2.6"/><circle cx="17" cy="9" r="2.2"/><path d="M3 20c0.8-3 3.2-4.8 6-4.8s5.2 1.8 6 4.8"/><path d="M14.5 15.6c2 0.2 3.6 1.6 4.2 3.9"/></svg>
+      Mes classes
+    </button>
+    <button class="tab-btn" data-tab="cahier">
+      <svg viewBox="0 0 24 24"><path d="M4 5h13a2 2 0 0 1 2 2v13H6a2 2 0 0 1-2-2z"/><path d="M8 9h8"/><path d="M8 13h8"/></svg>
+      Cahier de textes
+    </button>
+    <button class="tab-btn" data-tab="messagerie">
+      <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M3 6l9 7 9-7"/></svg>
+      Messagerie
+    </button>
+  </nav>
+
+  <main class="content">
+
+    <section class="tab-panel active" id="tab-accueil">
+      <div class="page-head">
+        <h1 id="greeting">Espace Professeur</h1>
+        <p>Retrouvez vos classes, votre cahier de textes et vos messages.</p>
+      </div>
+      <div class="portal-card" style="margin-bottom:2rem;">
+        <h3>Cette semaine</h3>
+        <p class="small-note">3 classes, 2 devoirs à ramasser, 1 message non lu.</p>
+      </div>
+      <h3 style="margin-bottom:1rem;">Mes applications</h3>
+      <div class="app-tiles">
+        <button class="app-tile" data-goto="classes">
+          <span class="tile-icon c1"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="2.6"/><circle cx="17" cy="9" r="2.2"/><path d="M3 20c0.8-3 3.2-4.8 6-4.8s5.2 1.8 6 4.8"/><path d="M14.5 15.6c2 0.2 3.6 1.6 4.2 3.9"/></svg></span>
+          <span class="tile-name">Mes classes</span>
+          <span class="tile-desc">Effectifs, emplois du temps</span>
+        </button>
+        <button class="app-tile" data-goto="cahier">
+          <span class="tile-icon c2"><svg viewBox="0 0 24 24"><path d="M4 5h13a2 2 0 0 1 2 2v13H6a2 2 0 0 1-2-2z"/><path d="M8 9h8"/><path d="M8 13h8"/></svg></span>
+          <span class="tile-name">Cahier de textes</span>
+          <span class="tile-desc">Devoirs et séances</span>
+        </button>
+        <button class="app-tile" data-goto="messagerie">
+          <span class="tile-icon c3"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M3 6l9 7 9-7"/></svg></span>
+          <span class="tile-name">Messagerie</span>
+          <span class="tile-desc">Boîte de réception</span>
+        </button>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="tab-classes">
+      <div class="page-head">
+        <h1>Mes classes</h1>
+        <p>Vue d'ensemble de vos classes.</p>
+      </div>
+      <div class="panel">
+        <table>
+          <thead><tr><th>Classe</th><th>Élèves</th><th>Prochain cours</th></tr></thead>
+          <tbody>
+            <tr><td>6ᵉ A</td><td>24</td><td>Lundi 8h</td></tr>
+            <tr><td>5ᵉ C</td><td>27</td><td>Lundi 10h</td></tr>
+            <tr><td>4ᵉ B</td><td>22</td><td>Mardi 9h</td></tr>
+          </tbody>
+        </table>
+        <p class="small-note">Contenu d'exemple — à remplacer par vos vraies classes.</p>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="tab-cahier">
+      <div class="page-head">
+        <h1>Cahier de textes</h1>
+        <p>Devoirs donnés à vos classes.</p>
+      </div>
+      <div class="panel">
+        <table>
+          <thead><tr><th>Classe</th><th>Devoir</th><th>À rendre</th></tr></thead>
+          <tbody>
+            <tr><td>6ᵉ A</td><td>Exercices p.42</td><td>Vendredi</td></tr>
+            <tr><td>5ᵉ C</td><td>Rédaction</td><td>Lundi</td></tr>
+          </tbody>
+        </table>
+        <p class="small-note">Contenu d'exemple — à remplacer par vos vrais devoirs.</p>
+      </div>
+    </section>
+
+    <section class="tab-panel" id="tab-messagerie">
+      <div class="page-head">
+        <h1>Messagerie</h1>
+        <p>Messages reçus de l'établissement et des élèves.</p>
+      </div>
+      <div class="panel">
+        <ul class="msg-list">
+          <li>
+            <div class="msg-top"><span class="msg-from">Vie scolaire</span><span class="msg-date">Aujourd'hui</span></div>
+            <div class="msg-subject">Réunion de rentrée reportée à jeudi</div>
+          </li>
+          <li>
+            <div class="msg-top"><span class="msg-from">Léa Fontaine — 5ᵉ C</span><span class="msg-date">Hier</span></div>
+            <div class="msg-subject">Question sur le devoir de rédaction</div>
+          </li>
+        </ul>
+        <p class="small-note">Contenu d'exemple — une vraie messagerie nécessiterait un stockage partagé entre comptes.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="foot">Démonstration locale — les comptes sont stockés dans ce navigateur uniquement.</footer>
+</div>
+
+<script src="app.js"></script>
+<script>
+  const session = requireRole("professeur");
+  if (session) {
+    document.getElementById("who-name").textContent = session.name;
+    document.getElementById("greeting").textContent = "Bonjour, " + session.name;
+  }
+
+  function openTab(tabName) {
+    document.querySelectorAll(".tab-btn").forEach((b) => b.classList.remove("active"));
+    document.querySelectorAll(".tab-panel").forEach((p) => p.classList.remove("active"));
+    document.querySelector(`.tab-btn[data-tab="${tabName}"]`).classList.add("active");
+    document.getElementById("tab-" + tabName).classList.add("active");
+  }
+
+  document.querySelectorAll(".tab-btn").forEach((btn) => {
+    btn.addEventListener("click", () => openTab(btn.dataset.tab));
+  });
+
+  document.querySelectorAll(".app-tile").forEach((tile) => {
+    tile.addEventListener("click", () => openTab(tile.dataset.goto));
+  });
+</script>
+</body>
+</html>
